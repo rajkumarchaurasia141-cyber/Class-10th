@@ -1,0 +1,178 @@
+{
+  "entities": {
+    "Chapter": {
+      "title": "Chapter",
+      "description": "NCERT Class 10 Hindi Medium Chapter with Objective Questions, MCQs, Subjective Q&A, Detailed Notes and Memory Tricks",
+      "type": "object",
+      "properties": {
+        "chapter_no": {
+          "type": "number",
+          "description": "Sequential chapter number in NCERT syllabus"
+        },
+        "chapter_name_hindi": {
+          "type": "string",
+          "description": "Official Hindi name of the chapter",
+          "maxLength": 200
+        },
+        "subject_id": {
+          "type": "string",
+          "description": "Unique identifier of the subject (maths, science, social_science, hindi, sanskrit, english)",
+          "maxLength": 50
+        },
+        "sub_category": {
+          "type": "string",
+          "description": "Subject branch like Physics, Chemistry, Biology, History, Geography, etc.",
+          "maxLength": 100
+        },
+        "notes_hindi": {
+          "type": "string",
+          "description": "Complete NCERT Class 10 chapter notes in pure Hindi medium"
+        },
+        "objective_questions": {
+          "type": "array",
+          "description": "Array of 1-mark one-linear objective questions and direct answers"
+        },
+        "mcq": {
+          "type": "array",
+          "description": "Array of 4-option MCQs with correct answer and Hindi explanation"
+        },
+        "subjective_qa": {
+          "type": "array",
+          "description": "Array of 2-3 marks short and 5 marks long subjective questions with step-by-step Hindi answers"
+        },
+        "trick_hindi": {
+          "type": "object",
+          "description": "Memory trick, mnemonic, or formula shortcut in Hindi for this chapter"
+        }
+      },
+      "required": ["chapter_no", "chapter_name_hindi", "subject_id", "notes_hindi"]
+    },
+    "PYQ": {
+      "title": "PYQ",
+      "description": "Bihar Board (BSEB) Official Previous Year Question (2016-2026)",
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "number",
+          "description": "Board examination year from 2016 to 2026"
+        },
+        "subject_id": {
+          "type": "string",
+          "description": "Subject identifier",
+          "maxLength": 50
+        },
+        "subject_name": {
+          "type": "string",
+          "description": "Subject name in Hindi",
+          "maxLength": 100
+        },
+        "chapter": {
+          "type": "string",
+          "description": "Chapter name associated with the question",
+          "maxLength": 200
+        },
+        "type": {
+          "type": "string",
+          "description": "Question type: mcq, short, or long",
+          "enum": ["mcq", "short", "long"]
+        },
+        "marks": {
+          "type": "number",
+          "description": "Marks weightage (1, 2, 3, or 5)"
+        },
+        "question": {
+          "type": "string",
+          "description": "Question text in Hindi"
+        },
+        "solution": {
+          "type": "string",
+          "description": "Authentic step-by-step NCERT/BSEB solution in Hindi"
+        }
+      },
+      "required": ["year", "subject_id", "chapter", "type", "marks", "question", "solution"]
+    },
+    "UserProgress": {
+      "title": "UserProgress",
+      "description": "Student learning progress, quiz scores, and bookmarks",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID or anonymous student ID",
+          "maxLength": 128
+        },
+        "chapterId": {
+          "type": "string",
+          "description": "Identifier of the chapter studied",
+          "maxLength": 64
+        },
+        "subjectId": {
+          "type": "string",
+          "description": "Identifier of the subject",
+          "maxLength": 64
+        },
+        "mcqsCompleted": {
+          "type": "number",
+          "description": "Number of MCQs completed by the student"
+        },
+        "testScore": {
+          "type": "number",
+          "description": "Score achieved in the chapter test"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of the last activity"
+        }
+      },
+      "required": ["userId", "updatedAt"]
+    },
+    "AIChat": {
+      "title": "AIChat",
+      "description": "Student doubt interaction with AI Teacher",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Student User ID",
+          "maxLength": 128
+        },
+        "question": {
+          "type": "string",
+          "description": "Text question asked by the student",
+          "maxLength": 2000
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Optional image URL or photo attachment of student doubt"
+        },
+        "answer": {
+          "type": "string",
+          "description": "AI Teacher step-by-step Hindi response"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of the doubt"
+        }
+      },
+      "required": ["userId", "question", "answer", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/class_10/{subjectId}/chapters/{chapterId}": {
+      "schema": "Chapter",
+      "description": "NCERT Class 10 curriculum chapters by subject with questions, MCQs, and tricks"
+    },
+    "/pyqs/{pyqId}": {
+      "schema": "PYQ",
+      "description": "Bihar Board 10th previous 10 years exam papers (2016-2026)"
+    },
+    "/users/{userId}/progress/{progressId}": {
+      "schema": "UserProgress",
+      "description": "Private study progress and quiz scores for a student"
+    },
+    "/users/{userId}/chats/{chatId}": {
+      "schema": "AIChat",
+      "description": "Student private AI Teacher doubt history"
+    }
+  }
+}
